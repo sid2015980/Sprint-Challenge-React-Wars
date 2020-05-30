@@ -4,32 +4,58 @@ import axios from "axios";
 import Character from "./components/Character";
 
 function App() {
-  const [card, setCard] = useState([]);
+  const [data, setData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [result, setResult] = useState("");
 
   useEffect(() => {
     axios
-      .get("https://swapi.py4e.com/api/people")
+      .get("https://swapi.py4e.com/api/people/")
       .then((response) => {
-        console.log(response.data.results);
-        setCard(response.data.results);
+        setData(response.data.results);
+        setFiltered(response.data.results);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []); //the [] allows the data to mount once and never again, instead of constantly loading
 
+  useEffect(() => {
+    const results = filtered.filter((res) =>
+      res.name.toLowerCase().includes(result) ||
+      res.birth_year.toLowerCase().includes(result) ||
+      res.gender.toLowerCase().includes(result)
+
+    );
+    setData(results);
+  }, [result]);
+
+  const onChange = (e) => {
+    setResult(e.target.value);
+  };
+
   return (
     <div className="App">
       <h1 className="Header">⭐️⭐️⭐️⭐️⭐️React Wars⭐️⭐️⭐️⭐️⭐️</h1>
+      {/* SEARCH BAR NOT FUNCTIONAL */}
       <form>
-        <label className="search" htmlFor="name">Search:</label>
-        <input id="name" type="text" name="textfield" placeholder="Search" />
+        <label className="search" htmlFor="name">
+          Search:
+        </label>
+        <input
+          id="name"
+          type="text"
+          name="textfield"
+          placeholder="serch here .."
+          value={result}
+          onChange={onChange}
+        />
       </form>
-      {card.map((CharData, index) => {
+      {data.map((CharData, i) => {
         console.log(CharData);
         return (
           <Character
-            key={index}
+            key={i}
             name={CharData.name}
             height={CharData.height}
             mass={CharData.mass}
