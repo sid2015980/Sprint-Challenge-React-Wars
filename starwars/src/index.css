@@ -5,3 +5,27 @@ body {
   background-image: url('./images/sw-bg.jpg');
   background-size: cover;
 }
+
+form {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form input {
+  margin: 10px 0;
+  width: 300px;
+}
+form textarea {
+  margin: 10px 0;
+}
+form input[type="text"] {
+  padding: 10px;
+  border: 1.5px solid darkred;
+}
+
+.search {
+  color: black;
+}
